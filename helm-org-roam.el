@@ -41,7 +41,7 @@
                      ))))
 ;;;###autoload
 (defun helm-org-roam-find-file-1 (candidate)
-    "Find File. Candidate"
+    "Find File given the candidate"
     (mapcar
      #'(lambda(a)
          (if (plist-get a :path)
@@ -54,7 +54,7 @@
            )) (helm-marked-candidates)))
 
 (defun helm-org-roam-multi-tag-add(tags files)
-  "Hello.  TAGS.   FILES."
+  ""
   (dolist (file files)
     (when (not (equal file nil))
            (with-current-buffer (find-file-noselect file)
@@ -65,7 +65,7 @@
            (org-roam-db--insert-tags 'update))
 
 (defun helm-org-roam-multi-tag-delete(tags files)
-  "Something"
+  ""
   (dolist (file files)
     (when (not (equal file nil))
            (with-current-buffer (find-file-noselect file)
