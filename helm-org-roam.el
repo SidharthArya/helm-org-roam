@@ -16,6 +16,7 @@
                    '(("Find File" . helm-org-roam-find-file-1)
                      ("Tag Add" . helm-org-roam-find-file-add-tags)
                      ("Tag Delete" . helm-org-roam-find-file-remove-tags)
+                     ("Remove Files" . helm-org-roam-remove-files)
                      ;; ("Move to Slipbox" .
                      ;;  (lambda(candidate)
                      ;;    (let* ((org-roam-current-directory org-roam-directory)
@@ -43,13 +44,17 @@
     "Find File. Candidate"
     (mapcar
      #'(lambda(a)
-         (message "%s"
-                  (find-file
-                   (plist-get a :path)))) (helm-marked-candidates)))
+         (if (plist-get a :path)
+             (find-file (plist-get a :path))
+           (let ((org-roam-capture--info `((title . ,a)
+                                           (slug  . ,(funcall org-roam-title-to-slug-function a))))
+                 (org-roam-capture--context 'title))
+             (setq org-roam-capture-additional-template-props (list :finalize 'find-file))
+             (org-roam-capture--capture))
+           )) (helm-marked-candidates)))
 
 (defun helm-org-roam-multi-tag-add(tags files)
   "Hello.  TAGS.   FILES."
-  (message "%s" tags)
   (dolist (file files)
     (when (not (equal file nil))
            (with-current-buffer (find-file-noselect file)
@@ -93,4 +98,13 @@
                                                                                        ))
                           
                           (helm-org-roam-multi-tag-delete tags-to-delete (mapcar #'(lambda (a) (plist-get a :path)) files))))
+
+(defun helm-org-roam-remove-files (candidate)
+  "Remove Files"
+    (mapcar
+     #'(lambda(a)
+         (message "%s"
+                  (delete-file
+                   (plist-get a :path)))) (helm-marked-candidates))
+  )
 (provide 'helm-org-roam)
