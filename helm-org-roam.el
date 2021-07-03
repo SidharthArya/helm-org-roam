@@ -1,5 +1,21 @@
-;; helm-org-roam.el -- fksdfkshgle
+;;; helm-org-roam.el --- Does something cool  -*- lexical-binding: t; -*-
 
+;; Copyright (C) 2020-2021 Sidharth Arya
+
+;; Author: Sidharth Arya <sidhartharya10@gmail.com>
+;; Maintainer: Someone Else <someone@example.com>
+;; Created: 14 Jul 2010
+
+;; Keywords: languages
+;; URL: https://example.com/foo
+
+;; This file is not part of GNU Emacs.
+
+;; This file is free software…
+…
+;; along with this file.  If not, see <https://www.gnu.org/licenses/>.
+
+;;; Commentary:
 (require 'helm)
 (require 'org-roam)
 (require 'dash)
